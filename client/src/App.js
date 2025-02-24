@@ -5,6 +5,8 @@ import Home from './components/Home';
 import About from './components/About';
 import Services from './components/Services';
 import References from './components/References';
+import Login from './components/admin/Login';
+import Dashboard from './components/admin/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -22,12 +24,15 @@ function App() {
                 <Nav.Link as={Link} to="/about">Hakkımızda</Nav.Link>
                 <Nav.Link as={Link} to="/services">Hizmetlerimiz</Nav.Link>
                 <Nav.Link as={Link} to="/references">Referanslar</Nav.Link>
+                <Nav.Link as={Link} to="/admin/login">Admin</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
         <Container className="mt-4">
           <Routes>
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/references" element={<References />} />
