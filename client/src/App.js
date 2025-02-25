@@ -1,44 +1,46 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import About from './components/About';
-import Services from './components/Services';
-import References from './components/References';
-import Login from './components/admin/Login';
-import Dashboard from './components/admin/Dashboard';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Contact from './components/Contact';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
+import AdminPostEdit from './components/AdminPostEdit';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
-          <Container>
-            <Navbar.Brand as={Link} to="/">Isıtma & Soğutma Sistemleri</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto">
-                <Nav.Link as={Link} to="/">Anasayfa</Nav.Link>
-                <Nav.Link as={Link} to="/about">Hakkımızda</Nav.Link>
-                <Nav.Link as={Link} to="/services">Hizmetlerimiz</Nav.Link>
-                <Nav.Link as={Link} to="/references">Referanslar</Nav.Link>
-                <Nav.Link as={Link} to="/admin/login">Admin</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <Container className="mt-4">
+      <div className="app">
+        <Navbar />
+        <main className="main-content">
           <Routes>
-            <Route path="/admin/login" element={<Login />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/references" element={<References />} />
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/admin"
+              element={
+                <PrivateRoute>
+                  <AdminDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/posts/:id/edit"
+              element={
+                <PrivateRoute>
+                  <AdminPostEdit />
+                </PrivateRoute>
+              }
+            />
           </Routes>
-        </Container>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

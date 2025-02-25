@@ -1,57 +1,130 @@
-import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import './Home.css';
 
-function Home() {
+const Home = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    issueType: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Form gönderme işlemi burada yapılacak
+    console.log('Form data:', formData);
+  };
+
+  const handleWhatsApp = () => {
+    const message = encodeURIComponent('Merhaba, teknik servis hizmeti almak istiyorum.');
+    window.open(`https://wa.me/+905XXXXXXXXX?text=${message}`, '_blank');
+  };
+
   return (
-    <div>
-      <div className="hero-section text-center mb-5">
-        <h1>Profesyonel Isıtma ve Soğutma Çözümleri</h1>
-        <p className="lead">Uzman ekibimizle size en iyi hizmeti sunuyoruz</p>
-        <img 
-          src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" 
-          alt="HVAC Systems"
-          className="img-fluid rounded shadow-lg mb-4"
-          style={{ maxHeight: '400px', width: '100%', objectFit: 'cover' }}
-        />
+    <div className="home">
+      <div className="hero-section">
+        <h1>Kombi Bakım ve Teknik Servis Hizmetleri</h1>
+        <p>Hızlı, Güvenilir ve Uygun Fiyatlı Teknik Destek</p>
+        <div className="hero-buttons">
+          <button onClick={handleWhatsApp} className="cta-button whatsapp">
+            <i className="fab fa-whatsapp"></i> Hemen Servis Çağır
+          </button>
+          <a href="#contact-form" className="cta-button contact">
+            Ücretsiz Danışmanlık Al
+          </a>
+        </div>
       </div>
 
-      <Row className="g-4">
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1581094794329-c8112c4e5190?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-            <Card.Body>
-              <Card.Title>Isıtma Sistemleri</Card.Title>
-              <Card.Text>
-                En son teknoloji ısıtma sistemleri ile evinizi ve işyerinizi ısıtıyoruz.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1586179253019-ac8a2522535f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-            <Card.Body>
-              <Card.Title>Soğutma Sistemleri</Card.Title>
-              <Card.Text>
-                Modern ve enerji tasarruflu soğutma çözümleri sunuyoruz.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-            <Card.Body>
-              <Card.Title>Bakım Hizmetleri</Card.Title>
-              <Card.Text>
-                Düzenli bakım ve onarım hizmetleri ile sistemlerinizin ömrünü uzatıyoruz.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <div className="services-section">
+        <h2>Hizmetlerimiz</h2>
+        <div className="services-grid">
+          <div className="service-card">
+            <div className="service-icon">🔧</div>
+            <h3>Kombi Bakımı</h3>
+            <p>Periyodik bakım ve onarım hizmetleri</p>
+          </div>
+          <div className="service-card">
+            <div className="service-icon">⚡</div>
+            <h3>Arıza Tespit</h3>
+            <p>Profesyonel arıza tespit ve çözüm</p>
+          </div>
+          <div className="service-card">
+            <div className="service-icon">🔨</div>
+            <h3>Parça Değişimi</h3>
+            <p>Orijinal yedek parça garantisi</p>
+          </div>
+          <div className="service-card">
+            <div className="service-icon">📱</div>
+            <h3>7/24 Destek</h3>
+            <p>Kesintisiz teknik servis hizmeti</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="contact-section" id="contact-form">
+        <div className="quick-contact">
+          <h2>Hızlı İletişim</h2>
+          <div className="contact-info">
+            <a href="tel:+902122222222" className="phone-button">
+              <i className="fas fa-phone"></i> (0212) XXX XX XX
+            </a>
+            <button onClick={handleWhatsApp} className="whatsapp-button">
+              <i className="fab fa-whatsapp"></i> WhatsApp'tan Yaz
+            </button>
+          </div>
+        </div>
+
+        <div className="contact-form">
+          <h3>Servis Talebi Oluştur</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                name="name"
+                placeholder="Adınız Soyadınız"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Telefon Numaranız"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <select
+                name="issueType"
+                value={formData.issueType}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Arıza Türü Seçin</option>
+                <option value="bakim">Kombi Bakımı</option>
+                <option value="ariza">Kombi Arızası</option>
+                <option value="montaj">Kombi Montaj</option>
+                <option value="diger">Diğer</option>
+              </select>
+            </div>
+            <button type="submit" className="submit-button">
+              Gönder
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default Home; 

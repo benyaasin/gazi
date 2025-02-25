@@ -1,64 +1,66 @@
 import React from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import './About.css';
 
-function About() {
+const About = () => {
   return (
-    <div>
-      <h1 className="text-center mb-5">Hakkımızda</h1>
-      <Row className="mb-5">
-        <Col md={6}>
-          <img
-            src="https://images.unsplash.com/photo-1581094794329-c8112c4e5190?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-            alt="Our Team"
-            className="img-fluid rounded shadow-lg"
-          />
-        </Col>
-        <Col md={6}>
-          <h2>Biz Kimiz?</h2>
-          <p className="lead">
-            20 yılı aşkın tecrübemizle, ısıtma ve soğutma sistemleri alanında lider firma olarak hizmet vermekteyiz.
+    <div className="about-container">
+      <div className="about-content">
+        <h1>Hakkımızda</h1>
+        <div className="about-text">
+          <p>
+            Gazi Teknik olarak, 20 yılı aşkın tecrübemizle ısıtma ve soğutma sistemleri alanında
+            İstanbul'un önde gelen teknik servis firmalarından biri olarak hizmet vermekteyiz.
           </p>
           <p>
-            Uzman ekibimiz ve modern teknolojimizle, müşterilerimize en iyi hizmeti sunmayı hedefliyoruz. 
-            Kaliteli ürünler ve profesyonel servis anlayışımızla sektörde öncü konumdayız.
+            Kombi bakım ve onarım, klima montaj ve servis, merkezi sistem bakım hizmetleri başta olmak üzere,
+            tüm ısıtma ve soğutma sistemleriniz için profesyonel çözümler sunuyoruz.
           </p>
-        </Col>
-      </Row>
+          <p>
+            Deneyimli teknik ekibimiz ve kaliteli hizmet anlayışımızla müşteri memnuniyetini
+            her zaman ön planda tutuyoruz.
+          </p>
+        </div>
+        
+        <div className="map-container">
+          <h2>Konum</h2>
+          <iframe
+            title="Gazi Teknik"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.654290027665!2d28.901439999999997!3d40.990037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabb7a8ac8de99%3A0x7e7c8200af11c37f!2zR8O2a2FscCwgMzkvMy4gU2suIDEzL0EsIDM0MDIwIFpleXRpbmJ1cm51L8Swc3RhbmJ1bA!5e0!3m2!1str!2str!4v1708866500000!5m2!1str!2str"
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
 
-      <Row className="g-4">
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Body>
-              <Card.Title>Misyonumuz</Card.Title>
-              <Card.Text>
-                Müşterilerimize en kaliteli hizmeti sunarak, konfor ve memnuniyeti en üst düzeyde tutmak.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Body>
-              <Card.Title>Vizyonumuz</Card.Title>
-              <Card.Text>
-                Sektörde lider konumumuzu koruyarak, yenilikçi çözümlerle müşterilerimizin hayatını kolaylaştırmak.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="h-100 shadow">
-            <Card.Body>
-              <Card.Title>Değerlerimiz</Card.Title>
-              <Card.Text>
-                Dürüstlük, şeffaflık ve müşteri memnuniyeti önceliklerimiz arasındadır.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+        <div className="contact-info">
+          <h2>İletişim Bilgileri</h2>
+          <div className="info-grid">
+            <div className="info-item">
+              <h3>Adres</h3>
+              <p>Gökalp Mahallesi</p>
+              <p>39/3. Sokak No: 13/A</p>
+              <p>34020 Zeytinburnu/İstanbul</p>
+            </div>
+            <div className="info-item">
+              <h3>Telefon</h3>
+              <p>+90 (212) XXX XX XX</p>
+              <p>7/24 Teknik Destek</p>
+            </div>
+            <div className="info-item">
+              <h3>Hizmetlerimiz</h3>
+              <p>Kombi Satış ve Servis</p>
+              <p>Klima Satış ve Montaj</p>
+              <p>Isıtma-Soğutma Sistemleri</p>
+              <p>7/24 Teknik Destek</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default About; 

@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "gazi-server",
   "version": "1.0.0",
-  "description": "HVAC Service Backend",
+  "description": "Gazi Üniversitesi Web Uygulaması Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "4.16.2",
+    "@prisma/client": "^5.10.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -22,6 +22,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.3",
-    "prisma": "4.16.2"
+    "prisma": "^5.10.2"
   }
 }
