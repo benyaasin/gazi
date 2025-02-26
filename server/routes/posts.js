@@ -5,13 +5,10 @@ const auth = require('../middleware/auth');
 
 const prisma = new PrismaClient();
 
-// Get all posts (public)
+// Tüm gönderileri getir
 router.get('/', async (req, res) => {
   try {
     const posts = await prisma.post.findMany({
-      where: {
-        isPublished: true
-      },
       include: {
         author: {
           select: {
@@ -24,21 +21,52 @@ router.get('/', async (req, res) => {
         createdAt: 'desc'
       }
     });
-
     res.json(posts);
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    res.status(500).json({ message: 'Error fetching posts' });
+    console.error('Get posts error:', error);
+    res.status(500).json({ message: 'Gönderiler alınırken bir hata oluştu' });
   }
 });
 
-// Get single post (public)
+// Yeni gönderi oluştur
+router.post('/', auth, async (req, res) => {
+  try {
+    console.log('Creating new post with data:', req.body);
+    console.log('User from token:', req.user);
+
+    const { title, content, isPublished } = req.body;
+    const adminId = req.user.adminId; // userId yerine adminId kullanıyoruz
+
+    if (!title || !content) {
+      return res.status(400).json({ message: 'Başlık ve içerik zorunludur' });
+    }
+
+    const post = await prisma.post.create({
+      data: {
+        title,
+        content,
+        isPublished: isPublished || false,
+        authorId: adminId
+      }
+    });
+
+    console.log('Post created successfully:', post);
+    res.status(201).json(post);
+  } catch (error) {
+    console.error('Create post error:', error);
+    res.status(500).json({ 
+      message: 'Gönderi oluşturulurken bir hata oluştu',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+
+// Gönderiyi ID'ye göre getir
 router.get('/:id', async (req, res) => {
   try {
+    const { id } = req.params;
     const post = await prisma.post.findUnique({
-      where: {
-        id: parseInt(req.params.id)
-      },
+      where: { id: parseInt(id) },
       include: {
         author: {
           select: {
@@ -50,65 +78,38 @@ router.get('/:id', async (req, res) => {
     });
 
     if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
-    }
-
-    if (!post.isPublished) {
-      return res.status(403).json({ message: 'Post is not published' });
+      return res.status(404).json({ message: 'Gönderi bulunamadı' });
     }
 
     res.json(post);
   } catch (error) {
-    console.error('Error fetching post:', error);
-    res.status(500).json({ message: 'Error fetching post' });
+    console.error('Get post error:', error);
+    res.status(500).json({ message: 'Gönderi alınırken bir hata oluştu' });
   }
 });
 
-// Create post (protected)
-router.post('/', auth, async (req, res) => {
-  try {
-    const { title, content, isPublished } = req.body;
-    const userId = req.user.userId;
-
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        isPublished: isPublished || false,
-        authorId: userId
-      }
-    });
-
-    res.status(201).json(post);
-  } catch (error) {
-    console.error('Error creating post:', error);
-    res.status(500).json({ message: 'Error creating post' });
-  }
-});
-
-// Update post (protected)
+// Gönderiyi güncelle
 router.put('/:id', auth, async (req, res) => {
   try {
+    const { id } = req.params;
     const { title, content, isPublished } = req.body;
-    const postId = parseInt(req.params.id);
-    const userId = req.user.userId;
+    const adminId = req.user.adminId; // userId yerine adminId kullanıyoruz
 
-    // Check if post exists and belongs to user
-    const existingPost = await prisma.post.findFirst({
-      where: {
-        id: postId,
-        authorId: userId
-      }
+    // Gönderinin mevcut sahibini kontrol et
+    const existingPost = await prisma.post.findUnique({
+      where: { id: parseInt(id) }
     });
 
     if (!existingPost) {
-      return res.status(404).json({ message: 'Post not found or unauthorized' });
+      return res.status(404).json({ message: 'Gönderi bulunamadı' });
     }
 
-    const updatedPost = await prisma.post.update({
-      where: {
-        id: postId
-      },
+    if (existingPost.authorId !== adminId) {
+      return res.status(403).json({ message: 'Bu gönderiyi düzenleme yetkiniz yok' });
+    }
+
+    const post = await prisma.post.update({
+      where: { id: parseInt(id) },
       data: {
         title,
         content,
@@ -116,41 +117,40 @@ router.put('/:id', auth, async (req, res) => {
       }
     });
 
-    res.json(updatedPost);
+    res.json(post);
   } catch (error) {
-    console.error('Error updating post:', error);
-    res.status(500).json({ message: 'Error updating post' });
+    console.error('Update post error:', error);
+    res.status(500).json({ message: 'Gönderi güncellenirken bir hata oluştu' });
   }
 });
 
-// Delete post (protected)
+// Gönderiyi sil
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const postId = parseInt(req.params.id);
-    const userId = req.user.userId;
+    const { id } = req.params;
+    const adminId = req.user.adminId; // userId yerine adminId kullanıyoruz
 
-    // Check if post exists and belongs to user
-    const existingPost = await prisma.post.findFirst({
-      where: {
-        id: postId,
-        authorId: userId
-      }
+    // Gönderinin mevcut sahibini kontrol et
+    const existingPost = await prisma.post.findUnique({
+      where: { id: parseInt(id) }
     });
 
     if (!existingPost) {
-      return res.status(404).json({ message: 'Post not found or unauthorized' });
+      return res.status(404).json({ message: 'Gönderi bulunamadı' });
+    }
+
+    if (existingPost.authorId !== adminId) {
+      return res.status(403).json({ message: 'Bu gönderiyi silme yetkiniz yok' });
     }
 
     await prisma.post.delete({
-      where: {
-        id: postId
-      }
+      where: { id: parseInt(id) }
     });
 
-    res.json({ message: 'Post deleted successfully' });
+    res.json({ message: 'Gönderi başarıyla silindi' });
   } catch (error) {
-    console.error('Error deleting post:', error);
-    res.status(500).json({ message: 'Error deleting post' });
+    console.error('Delete post error:', error);
+    res.status(500).json({ message: 'Gönderi silinirken bir hata oluştu' });
   }
 });
 

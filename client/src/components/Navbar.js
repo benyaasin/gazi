@@ -13,7 +13,6 @@ const Navbar = () => {
           <Link to="/" className="nav-link">Anasayfa</Link>
           <Link to="/about" className="nav-link">Hakkımızda</Link>
           <Link to="/contact" className="nav-link">İletişim</Link>
-          <Link to="/login" className="nav-link">Admin Girişi</Link>
         </div>
       </div>
     </nav>

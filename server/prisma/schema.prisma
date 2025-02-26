@@ -23,7 +23,7 @@ model Post {
   title       String
   content     String
   isPublished Boolean  @default(false)
-  author      User     @relation(fields: [authorId], references: [id])
+  author      Admin    @relation(fields: [authorId], references: [id])
   authorId    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -31,8 +31,9 @@ model Post {
 
 model Admin {
   id        Int      @id @default(autoincrement())
-  username  String   @unique
+  email     String   @unique
   password  String
+  posts     Post[]   // Admin'in gönderileri
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

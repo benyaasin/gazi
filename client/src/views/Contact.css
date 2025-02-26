@@ -1,0 +1,184 @@
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* İletişim Bilgileri */
+.contact-info {
+  margin-bottom: 60px;
+}
+
+.contact-info h2,
+.contact-form h2,
+.map-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.info-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.info-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.info-card h3 {
+  color: #0077B6;
+  margin-bottom: 10px;
+}
+
+.info-card a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-card a:hover {
+  color: #0077B6;
+}
+
+/* İletişim Formu */
+.contact-form {
+  margin-bottom: 60px;
+}
+
+.contact-form form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #0077B6;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 14px;
+  background: #0077B6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #005b8c;
+}
+
+/* Başarı Mesajı */
+.success-message {
+  text-align: center;
+  background: #d4edda;
+  color: #155724;
+  padding: 30px;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.success-message h3 {
+  color: #155724;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+/* Harita */
+.map-section {
+  margin-bottom: 60px;
+}
+
+.map-container {
+  width: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  color: #666;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .contact-info h2,
+  .contact-form h2,
+  .map-section h2 {
+    font-size: 2rem;
+  }
+
+  .contact-form form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    padding: 20px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+  }
+} 

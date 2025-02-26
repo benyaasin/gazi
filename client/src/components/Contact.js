@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Contact.css';
 
 const Contact = () => {
+  const [feedback, setFeedback] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Burada geri bildirimi backend'e gönderme işlemi yapılabilir
+    setSubmitted(true);
+    setFeedback('');
+  };
+
   return (
     <div className="contact-container">
       <div className="contact-content">
@@ -61,6 +71,27 @@ const Contact = () => {
 
             <button type="submit" className="submit-btn">Gönder</button>
           </form>
+        </div>
+
+        <div className="feedback-form">
+          <h3>Geri Bildirim</h3>
+          {submitted ? (
+            <div className="alert alert-success">
+              Geri bildiriminiz için teşekkür ederiz!
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="Görüş ve önerilerinizi bizimle paylaşın..."
+                required
+              />
+              <button type="submit" className="btn btn-primary">
+                Gönder
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
